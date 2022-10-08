@@ -1,0 +1,36 @@
+#increase{    
+    background-color: red;
+    border-radius: 5px;
+    border-width: 1px;
+    height: 50px;
+    flex: 1;
+    cursor: pointer;
+    box-shadow: 5px 5px 1px rgba(0, 0, 0, .8);
+}
+#increase:hover{
+    opacity: 80%;   
+}
+#increase:active{
+    opacity: 60%;
+}
+
+#button-wrapper {
+    display: flex;
+    justify-content: center;
+}
+#score {
+    display: flex;
+    justify-content: center;
+}
+#buyingOption {
+    display: flex;
+    padding: 5px;
+    margin: auto;
+    margin-top: 100px;
+    width: auto;
+    justify-content: center;
+    opacity: 0%;
+}
+#rebirthButton {
+    opacity: 0%;
+}
