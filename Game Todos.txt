@@ -1,0 +1,5 @@
+Make the game more realistic:
+- Add a text box on the screen and update it whenever the player gets a certain amount of money to have a scenario kick in:
+    - Example: Have someone have a scenario where someone either steals from them or gives them a little bit of money (using random chance)
+- Have dues:
+    - Example: Pay a random amount of money every time the player purchases a upgrade
