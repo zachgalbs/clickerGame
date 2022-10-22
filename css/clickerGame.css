@@ -1,34 +1,63 @@
 body {
     font-family: Arial;
 }
+#income {
+    display: flex;
+    justify-content: center;
+}
+#dayCounter {
+    display: flex;
+    justify-content: center;
+}
+.moneyTitle {
+    display: flex;
+    justify-content: center;
+    margin-bottom: -12px;
+}
 
-#increase{    
-    background-color: lightgray;
+#button{
+    color: black;
+    background-color: darkgray;
     border-radius: 5px;
-    border-width: 1px;
+    border-width: 0px;
     height: 200px;
     width: 200px;
     cursor: pointer;
-    box-shadow: 4px 4px 1px rgba(0, 0, 0, .5);
+    box-shadow: 8px 8px 4px rgba(0, 0, 0, .5);
+    outline-width: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10px;
+    margin-left: 10px;
 }
-#increase:hover{
-    opacity: 80%;   
+#button:hover{
+    opacity: 80%;
+    color: white;
 }
-#increase:active{
+#button:active{
     opacity: 60%;
-    box-shadow: 2px 2px 1px rgba(0, 0, 0, .8);
-    margin-top: 2px;
-    margin-left: 2px;
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, .8);
+    margin-left: 15px;
+    margin-top: 15px;
 }
 
 #button-wrapper {
     display: flex;
     justify-content: center;
-    /* border-style: solid; */
 }
-#score {
+#scoreDiv {
     display: flex;
     justify-content: center;
+}
+#score {
+    margin-left: 42px;
+}
+#moneyLostPerDayLabel {
+    color: red;
+    margin-left: 10px;
+    margin-top: 32px;
+    opacity: 0;
 }
 #buyingOption {
     display: flex;
@@ -36,19 +65,30 @@ body {
     width: auto;
     opacity: 0;
 }
+#buyingOptionText {
+    opacity: 0;
+    display: flex;
+    justify-content: center;
+    margin-top: -5px;
+}
 .buyingOptionDiv {
-    position: absolute;
-    left: 50%;
-    top: 45%;
-    transform: translate(-50%, -50%);
+    display: flex;
+    justify-content: center;
 }
 #dialogue {
     font-size: 20px;
 }
 .dialogueDiv {
-    margin-top: 20px;
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
+    display: flex;
+    justify-content: center;
+}
+.tryingToMakeWork {
+    animation: example 1.5s;
+}
+@keyframes example {
+    0% {opacity: 100%;}
+    25% {opacity: 75%}
+    50% {opacity: 50%;}
+    75% {opacity: 25%;}
+    100% {opacity: 0;}
 }

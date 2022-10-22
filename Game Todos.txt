@@ -1,5 +1,33 @@
 Make the game more realistic:
-- Add a text box on the screen and update it whenever the player gets a certain amount of money to have a scenario kick in:
-    - Example: Have someone have a scenario where someone either steals from them or gives them a little bit of money (using random chance)
 - Have dues:
     - Example: Pay a random amount of money every time the player purchases a upgrade
+
+Problem:
+
+    We get a special message triggered by the amount of money you have, like "You found some friends";
+    When we purchase a upgrade, and our money decreases, the message changes because of the if statements 
+    causing them in the first place. It doesn't make sense to have found friends, lost friends and gained 
+    them again in such a short period of time.
+
+    Solution(s):
+        One way to fix this problem is to make the messages dependent not on the amount of money you have, 
+        but instead the amount of upgrades you have.
+
+        The second way to fix this problem is to have a numeric value that corresponds to the statement, 
+        then at the beginning of each if statement, you check that numeric value and determine if you should
+        continue with the changing of the statement
+
+        I personally like the second method a lot more, because I think it wouldn't look as good if you had two 
+        text values on a page updating at the same time.
+
+    Fixed!!!
+
+Problem:
+    When we are going through the game, if you don't buy the first upgrade and wait until you can afford the 
+    second upgrade, the game keeps the first upgrade, but the other upgrades you get after it are forgotten.
+
+    Solution(s):
+        One way to fix this problem is to, whenever a upgrade is purchased, go through the upgrade if
+        statements again and check if any of them are true.
+
+        sec
