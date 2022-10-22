@@ -29,6 +29,7 @@ function setupGame() {
     incomeText = document.getElementById("income");
     dayText = document.getElementById("dayCounter");
     moneyLostPerDayLabel = document.getElementById("moneyLostPerDayLabel");
+
     runGame()
 }
 
@@ -174,10 +175,13 @@ function checkMoneyPerDay() {
     clicks = 0;
     dayTextNum++;
     dayText.innerHTML = `Day: ${dayTextNum}`;
-    console.log("this has ran");
+    console.log("check Money Per Day running...");
     moneyLostPerDayLabel.innerHTML = `-$${moneyLossPerDay}`;
-    //moneyLostPerDayLabel.style.animation = 'example 1.5s';
-    moneyLostPerDayLabel.classList.add('tryingToMakeWork');
+
+    console.log("attempting to run animation");
+    
+    moneyLostPerDayLabel.style.animation = 'simpleFadeIn 1.5s';
+    setTimeout(function() { moneyLostPerDayLabel.style.animationName = 'none'; }, 2000);
 
     if (moneyLossPerDay > 0) {
         console.log(moneyLossPerDay)

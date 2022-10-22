@@ -85,7 +85,7 @@ body {
 .tryingToMakeWork {
     animation: example 1.5s;
 }
-@keyframes example {
+@keyframes simpleFadeIn {
     0% {opacity: 100%;}
     25% {opacity: 75%}
     50% {opacity: 50%;}
