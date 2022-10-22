@@ -32,9 +32,8 @@ function setupGame() {
     runGame()
 }
 
-function runGame() {
-    increaseButton.onclick = function() {
-        if (!enterPressed) {
+function processClick() {
+    if (!enterPressed) {
         upgradeCheck();
         money += increaseValue;
         money = Math.round(money*100)/100
@@ -46,8 +45,21 @@ function runGame() {
         if (clicks>=200) {checkMoneyPerDay();}
         checkForDialogue();
     }
+    
     enterPressed = false;
+}
+
+function bulkClick(clicks) {
+    for (let click = 0; click < clicks; click++) {
+        processClick();
     }
+}
+
+function runGame() {
+    increaseButton.onclick = function() {
+        processClick();
+    }
+
     upgradeButton.onclick = function() {
         popUpgrade();
         increaseValue = Math.round(increaseValue*100)/100;
