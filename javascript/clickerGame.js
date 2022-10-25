@@ -51,6 +51,21 @@ function processClick() {
         checkForDialogue();
         rebirthCheck();
     }
+    else if (enterPressed) {
+        upgradeCheck();
+        increaseValue = increaseValue / 3
+        money += increaseValue;
+        money = Math.round(money*100)/100
+        htmlMoney.innerHTML = (money).toLocaleString('en-US', {
+            style: 'currency',
+            currency: 'USD',
+        });
+        clicks++;
+        if (clicks>=200) {checkMoneyPerDay();}
+        checkForDialogue();
+        rebirthCheck();
+        increaseValue = increaseValue * 3
+    }
     
     enterPressed = false;
 }
@@ -76,27 +91,29 @@ function runGame() {
 function upgradeCheck() {
     console.log(numOfUpgrades);
     // WATER BOTTLE
-    if (moneyPassed(10) && numOfUpgrades == 0) {pushUpgrade({text: "Buy a nourishing meal! (+$0.02 income, -$7.00)", value: 0.02, price: 7})};
+    if (moneyPassed(10) && numOfUpgrades == 0) {pushUpgrade({text: "Buy a nourishing meal! (+$0.02 income, -$7.00)", value: 0.02 * (amountOfRebirths + 1), price: 7})};
     // DRUMSTICK 
-    if (moneyPassed(25) && numOfUpgrades == 1) {pushUpgrade({text: "Buy a bucket and drum sticks! (+$0.04 income, -$15.00)", value: 0.04, price: 15})}
+    if (moneyPassed(25) && numOfUpgrades == 1) {pushUpgrade({text: "Buy a bucket and drum sticks! (+$0.04 income, -$15.00)", value: 0.04 * (amountOfRebirths + 1), price: 15})}
     // VIOLIN
-    if (moneyPassed(50) && numOfUpgrades == 2) {pushUpgrade({text: "Buy a cheap violin and some sheet music! (+$0.04 income, -$30.00)", value: 0.04, price: 30})}
+    if (moneyPassed(50) && numOfUpgrades == 2) {pushUpgrade({text: "Buy a cheap violin and some sheet music! (+$0.04 income, -$30.00)", value: 0.04 * (amountOfRebirths + 1), price: 30})}
     // CLOTHES
-    if (moneyPassed(100) && numOfUpgrades == 3) {pushUpgrade({text: "Get some clothes and a pair of shoes! (+$0.05 income, -$80.00)", value: 0.05, price: 80})}
+    if (moneyPassed(100) && numOfUpgrades == 3) {pushUpgrade({text: "Get some clothes and a pair of shoes! (+$0.05 income, -$80.00)", value: 0.05 * (amountOfRebirths + 1), price: 80})}
     // VIOLIN 2
-    if (moneyPassed(300) && numOfUpgrades == 4) {pushUpgrade({text: "Get a better violin! (+$0.05 income, -$200.00)", value: 0.05, price: 200})}
+    if (moneyPassed(300) && numOfUpgrades == 4) {pushUpgrade({text: "Get a better violin! (+$0.05 income, -$200.00)", value: 0.05 * (amountOfRebirths + 1), price: 200})}
     // KEYBOARD
-    if (moneyPassed(650) && numOfUpgrades == 5) {pushUpgrade({text: "Get a electric piano! (+$0.10 income, -$499.00)", value: 0.10, price: 499})}
+    if (moneyPassed(650) && numOfUpgrades == 5) {pushUpgrade({text: "Get a electric piano! (+$0.10 income, -$499.00)", value: 0.10 * (amountOfRebirths + 1), price: 499})}
     // SPEAKERS
-    if (moneyPassed(800) && numOfUpgrades == 6) {pushUpgrade({text: "Buy two high quality speakers for your piano! (+$0.15 income, -$450.00)", value: 0.15, price: 450})}
+    if (moneyPassed(800) && numOfUpgrades == 6) {pushUpgrade({text: "Buy two high quality speakers for your piano! (+$0.15 income, -$450.00)", value: 0.15 * (amountOfRebirths + 1), price: 450})}
     // HAIRCUT
-    if (moneyPassed(1100) && numOfUpgrades == 7) {pushUpgrade({text: "Get a haircut and better clothes! (+$0.05 income -$150.00)", value: 0.05, price: 150})}
+    if (moneyPassed(1100) && numOfUpgrades == 7) {pushUpgrade({text: "Get a haircut and better clothes! (+$0.05 income -$150.00)", value: 0.05 * (amountOfRebirths + 1), price: 150})}
     // LESSONS
-    if (moneyPassed(1800) && numOfUpgrades == 8) {pushUpgrade({text: "Get piano lessons! (+$0.50 income -$80.00 per day)", value: 0.50, price: 0, pricePerDay: 80})}
+    if (moneyPassed(1800) && numOfUpgrades == 8) {pushUpgrade({text: "Get piano lessons! (+$0.50 income -$80.00 per day)", value: 0.50 * (amountOfRebirths + 1), price: 0, pricePerDay: 80})}
     // WORKERS
-    if (moneyPassed(3000) && numOfUpgrades == 9) {pushUpgrade({text: "Hire your homeless friends to play your violin in different locations! (+$60.00 per day)", value: 0, price: 0, pricePerDay: -60})}
+    if (moneyPassed(3000) && numOfUpgrades == 9) {pushUpgrade({text: "Hire your homeless friends to play your violin in different locations! (+$60.00 per day)", value: 0, price: 0, pricePerDay: -60 * (amountOfRebirths + 1)})}
+    // BAND
+    if (moneyPassed(5500) && numOfUpgrades == 10) {pushUpgrade({text: "Make a band with your friends! (+$0.50 income - $2,000)"})}
     // WORLD
-    if (moneyPassed(100,000,000,000,000,000) && numOfUpgrades == 50) {pushUpgrade({text: "Buy the world and everyone on it! (+$100,000,000,000,000 income -$85,000,000,000,000,000)", value: 100000000000000, price:85000000000000000})}
+    if (moneyPassed(100,000,000,000,000,000) && numOfUpgrades == 50) {pushUpgrade({text: "Buy the world and everyone on it! (+$100,000,000,000,000 income -$85,000,000,000,000,000)", value: 100000000000000 * (amountOfRebirths + 1), price:85000000000000000})}
 }
 
 function moneyPassed(neededMoney) {
@@ -162,7 +179,7 @@ function checkForDialogue() {
     else if (money >= 40) {
         checkMoneyDialogue("You know some people around the city that come to your performances!", 2)
     }
-    else if (money >= 6) {
+    else if (money >= 8) {
         checkMoneyDialogue("You've found some homeless buddies!", 1);
     }
     else if (moneyPassed) {
