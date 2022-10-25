@@ -30,4 +30,4 @@ Problem:
         One way to fix this problem is to, whenever a upgrade is purchased, go through the upgrade if
         statements again and check if any of them are true.
 
-        sec
+    Fixed!!!

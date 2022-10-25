@@ -12,15 +12,19 @@ let enterPressed = false;
 let upgradeButtonText;
 let incomeText;
 let dayText;
+let rebirthButton;
+
 let dayTextNum = 0;
 let numOfUpgrades = 0;
 let clicks = 0;
 let moneyLossPerDay = 0;
 let upgradeLossPerDay = 0;
 let moneyLostPerDayLabel;
+let amountOfRebirths = 0;
 
 let upgradeStack = [];
 function setupGame() {
+    rebirthButton = document.getElementById("rebirthButton");
     htmlMoney = document.getElementById("score");
     increaseButton = document.getElementById("button");
     upgradeButton = document.getElementById("buyingOption");
@@ -45,6 +49,7 @@ function processClick() {
         clicks++;
         if (clicks>=200) {checkMoneyPerDay();}
         checkForDialogue();
+        rebirthCheck();
     }
     
     enterPressed = false;
@@ -69,6 +74,7 @@ function runGame() {
 }
 
 function upgradeCheck() {
+    console.log(numOfUpgrades);
     // WATER BOTTLE
     if (moneyPassed(10) && numOfUpgrades == 0) {pushUpgrade({text: "Buy a nourishing meal! (+$0.02 income, -$7.00)", value: 0.02, price: 7})};
     // DRUMSTICK 
@@ -77,7 +83,7 @@ function upgradeCheck() {
     if (moneyPassed(50) && numOfUpgrades == 2) {pushUpgrade({text: "Buy a cheap violin and some sheet music! (+$0.04 income, -$30.00)", value: 0.04, price: 30})}
     // CLOTHES
     if (moneyPassed(100) && numOfUpgrades == 3) {pushUpgrade({text: "Get some clothes and a pair of shoes! (+$0.05 income, -$80.00)", value: 0.05, price: 80})}
-    // BETTER VIOLIN
+    // VIOLIN 2
     if (moneyPassed(300) && numOfUpgrades == 4) {pushUpgrade({text: "Get a better violin! (+$0.05 income, -$200.00)", value: 0.05, price: 200})}
     // KEYBOARD
     if (moneyPassed(650) && numOfUpgrades == 5) {pushUpgrade({text: "Get a electric piano! (+$0.10 income, -$499.00)", value: 0.10, price: 499})}
@@ -175,21 +181,47 @@ function checkMoneyPerDay() {
     clicks = 0;
     dayTextNum++;
     dayText.innerHTML = `Day: ${dayTextNum}`;
-    console.log("check Money Per Day running...");
     moneyLostPerDayLabel.innerHTML = `-$${moneyLossPerDay}`;
-
-    console.log("attempting to run animation");
     
     moneyLostPerDayLabel.style.animation = 'simpleFadeIn 1.5s';
     setTimeout(function() { moneyLostPerDayLabel.style.animationName = 'none'; }, 2000);
 
     if (moneyLossPerDay > 0) {
-        console.log(moneyLossPerDay)
         money -= moneyLossPerDay;
         htmlMoney.innerHTML = (money).toLocaleString('en-US', {
             style: 'currency',
             currency: 'USD',
         });
+    }
+}
+function runRebirth() {
+    rebirthButton.onclick = function() {
+        if (rebirthButton.style.opacity == '1') {
+            amountOfRebirths++;
+            money = 0;
+            htmlMoney.innerHTML = (money).toLocaleString('en-US', {
+                style: 'currency',
+                currency: 'USD',
+            });
+            numOfUpgrades = 0;
+            statementNum = 0;
+            upgradeStack = [];
+            moneyLossPerDay = 0;
+            upgradeCheck();
+            showUpgradeStack();
+            dialogue.innerHTML = "You're broke on the streets of Downtown Palo Alto, California.";
+            rebirthCheck();
+        }
+    }
+}
+
+function rebirthCheck() {
+    if (money > 1000 * (amountOfRebirths + 1)) {
+        rebirthButton.style.opacity = '1';
+        runRebirth();
+    }
+    else {
+        rebirthButton.style.opacity = '0.5';
     }
 }
 
