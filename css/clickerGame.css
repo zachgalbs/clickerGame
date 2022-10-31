@@ -5,6 +5,12 @@ body {
     display: flex;
     justify-content: center;
 }
+#rebirthButton {
+    opacity: 50%;
+    position: absolute;
+    right: 10px;
+    top: 10px;
+}
 #dayCounter {
     display: flex;
     justify-content: center;
@@ -51,7 +57,7 @@ body {
     justify-content: center;
 }
 #score {
-    margin-left: 42px;
+    margin-left: 30px;
 }
 #moneyLostPerDayLabel {
     color: red;
@@ -81,9 +87,6 @@ body {
 .dialogueDiv {
     display: flex;
     justify-content: center;
-}
-.tryingToMakeWork {
-    animation: example 1.5s;
 }
 @keyframes simpleFadeIn {
     0% {opacity: 100%;}
