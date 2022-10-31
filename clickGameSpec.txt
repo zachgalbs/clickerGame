@@ -1,0 +1,12 @@
+OVERVIEW
+
+Clicker Game is a simple game: you click the button. Each time you click the button, you get a point. At various points in the game, you are offered bonus buttons. Click on the bonus button modifies the scoring of the main button, usually by increasing the increment of the score rewarded by clicking on the main button.
+
+The point of Clicker Game is to give you something to do with your mouse button or trackpad. That’s it.
+
+
+BONUS BUTTON RULES
+
+Bonus buttons work as a "stack." That is, the buttons appear at various points, determined by how many points the player has. When a button appears, you can click on it. However, you don't have to click on it. And, if a bonus button is available and another becomes available, that second bonus button is layered on top of the first in a sort of "bonus button stack." Clicking on the top-most bonus button in the stack causes the prior button to become re-available.
+
+In this way, the player can choose to defer or ignore earlier bonus buttons until they see fit to click on them.
