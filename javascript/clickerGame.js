@@ -7,12 +7,18 @@ let statementNum = 0;
 let htmlMoney;
 let increaseButton;
 let upgradeButton;
+let passButton;
 let dialogue;
+
+let isChoicePassed = false;
 let enterPressed = false;
+let isChoice = false;
+
 let upgradeButtonText;
 let incomeText;
 let dayText;
 let rebirthButton;
+
 
 let dayTextNum = 0;
 let numOfUpgrades = 0;
@@ -33,13 +39,14 @@ function setupGame() {
     incomeText = document.getElementById("income");
     dayText = document.getElementById("dayCounter");
     moneyLostPerDayLabel = document.getElementById("moneyLostPerDayLabel");
-
+    passButton = document.getElementById("passOption");
     runGame()
 }
 
 function processClick() {
     if (!enterPressed) {
         upgradeCheck();
+
         money += increaseValue;
         money = Math.round(money*100)/100
         htmlMoney.innerHTML = (money).toLocaleString('en-US', {
@@ -50,6 +57,7 @@ function processClick() {
         if (clicks>=200) {checkMoneyPerDay();}
         checkForDialogue();
         rebirthCheck();
+        passUpgrade();
     }
     else if (enterPressed) {
         upgradeCheck();
@@ -64,6 +72,7 @@ function processClick() {
         if (clicks>=200) {checkMoneyPerDay();}
         checkForDialogue();
         rebirthCheck();
+        passUpgrade();
         increaseValue = increaseValue * 3
     }
     
@@ -78,30 +87,32 @@ function bulkClick(clicks) {
 
 function runGame() {
     increaseButton.onclick = function() {
-        processClick();
+        if (!isChoice){
+            processClick()
+        };
     }
 
     upgradeButton.onclick = function() {
         popUpgrade();
+        passUpgrade();
         increaseValue = Math.round(increaseValue*100)/100;
         incomeText.innerHTML = `Income: $${increaseValue}`;
     }
 }
 
 function upgradeCheck() {
-    console.log(numOfUpgrades);
     // WATER BOTTLE
-    if (moneyPassed(10) && numOfUpgrades == 0) {pushUpgrade({text: "Buy a nourishing meal! (+$0.02 income, -$7.00)", value: 0.02 * (amountOfRebirths + 1), price: 7})};
+    if (moneyPassed(10) && numOfUpgrades == 0) {pushUpgrade({text: "Buy a nourishing meal! (+$0.02 income, -$7.00)", value: 0.02 * (amountOfRebirths + 1), price: 5})};
     // DRUMSTICK 
     if (moneyPassed(25) && numOfUpgrades == 1) {pushUpgrade({text: "Buy a bucket and drum sticks! (+$0.04 income, -$15.00)", value: 0.04 * (amountOfRebirths + 1), price: 15})}
     // VIOLIN
     if (moneyPassed(50) && numOfUpgrades == 2) {pushUpgrade({text: "Buy a cheap violin and some sheet music! (+$0.04 income, -$30.00)", value: 0.04 * (amountOfRebirths + 1), price: 30})}
     // CLOTHES
-    if (moneyPassed(100) && numOfUpgrades == 3) {pushUpgrade({text: "Get some clothes and a pair of shoes! (+$0.05 income, -$80.00)", value: 0.05 * (amountOfRebirths + 1), price: 80})}
+    if (moneyPassed(100) && numOfUpgrades == 3) {pushUpgrade({text: "Get some clothes and a pair of shoes! (+$0.05 income, -$60.00)", value: 0.05 * (amountOfRebirths + 1), price: 60})}
     // VIOLIN 2
-    if (moneyPassed(300) && numOfUpgrades == 4) {pushUpgrade({text: "Get a better violin! (+$0.05 income, -$200.00)", value: 0.05 * (amountOfRebirths + 1), price: 200})}
+    if (moneyPassed(300) && numOfUpgrades == 4) {pushUpgrade({text: "Get a better violin! (+$0.05 income, -$200.00)", value: 0.05 * (amountOfRebirths + 1), price: 190})}
     // KEYBOARD
-    if (moneyPassed(650) && numOfUpgrades == 5) {pushUpgrade({text: "Get a electric piano! (+$0.10 income, -$499.00)", value: 0.10 * (amountOfRebirths + 1), price: 499})}
+    if (moneyPassed(650) && numOfUpgrades == 5) {pushUpgrade({text: "Get a electric piano! (+$0.10 income, -$400.00)", value: 0.10 * (amountOfRebirths + 1), price: 400})}
     // SPEAKERS
     if (moneyPassed(800) && numOfUpgrades == 6) {pushUpgrade({text: "Buy two high quality speakers for your piano! (+$0.15 income, -$450.00)", value: 0.15 * (amountOfRebirths + 1), price: 450})}
     // HAIRCUT
@@ -111,7 +122,18 @@ function upgradeCheck() {
     // WORKERS
     if (moneyPassed(3000) && numOfUpgrades == 9) {pushUpgrade({text: "Hire your homeless friends to play your violin in different locations! (+$60.00 per day)", value: 0, price: 0, pricePerDay: -60 * (amountOfRebirths + 1)})}
     // BAND
-    if (moneyPassed(5500) && numOfUpgrades == 10) {pushUpgrade({text: "Make a band with your friends! (+$0.50 income - $2,000)"})}
+    if (moneyPassed(5500) && numOfUpgrades == 10) {pushUpgrade({text: "Make a band with your friends! (+$0.50 income - $2,000)", value: 0.50 * (amountOfRebirths + 1), price: 2000})}
+    // TEACHING
+    if (moneyPassed(10000) && numOfUpgrades == 11) {pushUpgrade({text: "Teach your friends to play their instruments better! (+$1.00 income - $4,000)", value: 1.00 * (amountOfRebirths + 1), price: 4000})}
+    // OFFER
+    if (moneyPassed(18000) && numOfUpgrades == 12) {
+        isChoice = true;
+        pushUpgrade({
+            text: "You see that a club has a open jazz night every night for a week! Do you attend? (-$2.00 income -$0)", value: -2.0 * (amountOfRebirths + 1), price: 0})
+    }
+    if (moneyPassed(22000) && numOfUpgrades == 13 && isChoicePassed == false) {
+        pushUpgrade({text: "You have been asked to join a band! (+$5.00 income -$500)", value: 5.0 * (amountOfRebirths + 1), price: 500})
+    }
     // WORLD
     if (moneyPassed(100,000,000,000,000,000) && numOfUpgrades == 50) {pushUpgrade({text: "Buy the world and everyone on it! (+$100,000,000,000,000 income -$85,000,000,000,000,000)", value: 100000000000000 * (amountOfRebirths + 1), price:85000000000000000})}
 }
@@ -126,6 +148,30 @@ function pushUpgrade(upgrade) {
     showUpgradeStack();
 }
 
+function passUpgrade() {
+    if (isChoice == true){
+        passButton.style.opacity = '1';
+        passButton.style.cursor = 'pointer';
+        passButton.onclick = function() {
+        if (passButton.style.opacity == '1'){
+            passButton.style.opacity = '0';
+            passButton.style.cursor = 'default';
+            upgradeWorth = 0;
+            upgradePrice = 0;
+            isChoicePassed = true;
+            popUpgrade();
+            increaseValue = Math.round(increaseValue*100)/100;
+            incomeText.innerHTML = `Income: $${increaseValue}`;
+            isChoice = false;
+        }
+        }
+    }
+    else {
+        passButton.style.opacity = '0';
+        passButton.style.cursor = 'default';
+    }
+}
+
 function popUpgrade() {
     if (upgradeStack.length > 0) {
         increaseValue += upgradeWorth;
@@ -138,6 +184,7 @@ function popUpgrade() {
         });
         upgradeCheck();
     }
+    isChoice = false;
     upgradeStack.pop();
     showUpgradeStack();
 }
@@ -162,6 +209,7 @@ function showUpgradeStack() {
         upgradeButton.style.cursor = "default";
     }
 }
+
 
 function checkForDialogue() {
     if (money >= 85,000,000,000,000,000) {
@@ -198,19 +246,17 @@ function checkMoneyPerDay() {
     clicks = 0;
     dayTextNum++;
     dayText.innerHTML = `Day: ${dayTextNum}`;
-    moneyLostPerDayLabel.innerHTML = `-$${moneyLossPerDay}`;
+    moneyLossPerDay <= 0 ? moneyLostPerDayLabel.style.color = 'green' : moneyLostPerDayLabel.style.color = 'red';
+    moneyLostPerDayLabel.innerHTML = `$${Math.abs(moneyLossPerDay)}`;
     
     moneyLostPerDayLabel.style.animation = 'simpleFadeIn 1.5s';
     setTimeout(function() { moneyLostPerDayLabel.style.animationName = 'none'; }, 2000);
-
-    if (moneyLossPerDay > 0) {
-        money -= moneyLossPerDay;
-        htmlMoney.innerHTML = (money).toLocaleString('en-US', {
-            style: 'currency',
-            currency: 'USD',
-        });
-    }
-}
+    money -= moneyLossPerDay;
+    htmlMoney.innerHTML = (money).toLocaleString('en-US', {
+        style: 'currency',
+        currency: 'USD',
+    });
+}   
 function runRebirth() {
     rebirthButton.onclick = function() {
         if (rebirthButton.style.opacity == '1') {
@@ -221,9 +267,12 @@ function runRebirth() {
                 currency: 'USD',
             });
             numOfUpgrades = 0;
+            increaseValue = 0.1;
+            incomeText.innerHTML = `Income: $${increaseValue}`;
             statementNum = 0;
             upgradeStack = [];
             moneyLossPerDay = 0;
+            upgradeLossPerDay = 0;
             upgradeCheck();
             showUpgradeStack();
             dialogue.innerHTML = "You're broke on the streets of Downtown Palo Alto, California.";
