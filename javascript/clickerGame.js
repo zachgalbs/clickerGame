@@ -215,6 +215,18 @@ function checkForDialogue() {
     if (money >= 85,000,000,000,000,000) {
         checkMoneyDialogue("Your net worth is greater than that of the entire world and everyone on it!", 30)
     }
+    else if (money >= 20000) {
+        checkMoneyDialogue("You notice notes are being taken by important people")
+    }
+    else if (money >= 8000) {
+        checkMoneyDialogue("You are widely reguarded as the best musician among the homeless in your city!")
+    }
+    else if (money >= 3500) {
+        checkMoneyDialogue("You are now known by a few people as the 'Homeless Entreprenuer'")
+    }
+    else if (money >= 2000) {
+        checkMoneyDialogue("You are known throughout the homeless community for your rapid gain of cash!")
+    }
     else if (money >= 900) {
         checkMoneyDialogue("You start building up a reputation throughout the city with your piano skills!", 5)
     }
